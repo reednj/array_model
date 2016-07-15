@@ -32,27 +32,26 @@ require "array_model/version"
 #
 class ArrayModel
 	def self.[](k)
-		if @data.is_a? Array
-			item_data = @data[k.to_i] 
+		if @data_key.nil?
+			item_data = @data[k.to_i]
 		else
-			item_data = @data[k] || @data[k.to_sym]
+			item_data = @data.select{|a| a[@data_key] == k }.first
 		end
 
-		if item_data.nil?
-			return nil
-		else
-			return self.new(item_data)
-		end		
+		return nil if item_data.nil?
+		return self.new(item_data)
 	end
 
 	def self.all
 		if @data.is_a? Array
 			@data.map { |v| self.new(v) }
-		elsif @data.is_a? Hash
-			@data.map { |k, v| self.new(v) }
 		else
 			raise "ArrayModel does not support #{@data.class} as data source"
 		end		
+	end
+
+	def [](k)
+		values[k]
 	end
 
 	def values
@@ -70,7 +69,23 @@ class ArrayModel
 		end
 	end
 
-	def self.model_data(data)
+	def self.model_data(data, options = nil)
+		options ||= {}
+		data.is_a! Array, 'data'
+
+		@data_key = options[:key]
 		@data = data	
+	end
+end
+
+class Object
+	def is_a!(t, name = nil)
+		if !is_a? t
+			if name.nil?
+				raise "expected #{t} but got #{self.class}"
+			else
+				raise "#{name} requires #{t} but got #{self.class}"
+			end
+		end
 	end
 end
