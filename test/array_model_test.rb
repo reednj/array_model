@@ -54,6 +54,7 @@ class ArrayModelTest < Minitest::Test
 		assert !u.nil?, 'expected record, but got nil'
 		assert u.username == t[:username], 'incorrect record selected, field does not match'
 		assert KeyUsers['randommm'].nil?, 'non-existant key should return nil'
+		assert KeyUsers[0].nil?, 'non-existant integer key should return nil'
 	end
 
 end

@@ -44,7 +44,7 @@ class ArrayModel
 
 	def self.all
 		if @data.is_a? Array
-			@data.map { |v| self.new(v) }
+			@all_records ||= @data.map { |v| self.new(v) }
 		else
 			raise "ArrayModel does not support #{@data.class} as data source"
 		end		
