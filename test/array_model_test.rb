@@ -11,8 +11,8 @@ USER_DATA = [
 
 class Users < ArrayModel
 	model_data USER_DATA
-	attr_value_reader :username
-	attr_value_reader :age
+	attr_model_reader :username
+	attr_model_reader :age
 
 	def adult?
 		self.age >= 18
@@ -21,14 +21,14 @@ end
 
 class KeyUsers < ArrayModel
 	model_data USER_DATA, :primary_key => :username
-	attr_value_reader :username
-	attr_value_reader :age
+	attr_model_reader :username
+	attr_model_reader :age
 end
 
 class AttrUsers < ArrayModel
 	model_data USER_DATA, :primary_key => :username
-	attr_value_reader :first_name, :key => :name
-	attr_value_readers [:username, :age]
+	attr_model_reader :first_name, :key => :name
+	attr_model_readers [:username, :age]
 end
 
 class ArrayModelTest < Minitest::Test

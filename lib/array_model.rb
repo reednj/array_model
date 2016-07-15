@@ -19,8 +19,8 @@ require "array_model/version"
 #
 #	class User < ArrayModel
 #		model_data USERS
-#		attr_value_reader :name
-#		attr_value_reader :year
+#		attr_model_reader :name
+#		attr_model_reader :year
 #
 #		def age
 #			Time.now.year - year
@@ -63,14 +63,14 @@ class ArrayModel
 		@item_data = item_data
 	end
 
-	def self.attr_value_reader(name, options = {})
+	def self.attr_model_reader(name, options = {})
 		define_method name.to_sym do
 			values[(options[:key] || name).to_sym]
 		end
 	end
 
-	def self.attr_value_readers(keys)
-		keys.each {|k| attr_value_reader k }
+	def self.attr_model_readers(keys)
+		keys.each {|k| attr_model_reader k }
 	end
 
 	def self.model_data(data, options = nil)
