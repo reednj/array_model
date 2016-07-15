@@ -20,9 +20,15 @@ class Users < ArrayModel
 end
 
 class KeyUsers < ArrayModel
-	model_data USER_DATA, :key => :username
+	model_data USER_DATA, :primary_key => :username
 	attr_value_reader :username
 	attr_value_reader :age
+end
+
+class AttrUsers < ArrayModel
+	model_data USER_DATA, :primary_key => :username
+	attr_value_reader :first_name, :key => :name
+	attr_value_readers [:username, :age]
 end
 
 class ArrayModelTest < Minitest::Test
@@ -55,6 +61,20 @@ class ArrayModelTest < Minitest::Test
 		assert u.username == t[:username], 'incorrect record selected, field does not match'
 		assert KeyUsers['randommm'].nil?, 'non-existant key should return nil'
 		assert KeyUsers[0].nil?, 'non-existant integer key should return nil'
+	end
+
+	def test_mulitple_attrs_created
+		u = AttrUsers['zhena']
+		assert !u.nil?, 'unexpected nil record'
+		assert !u.username.nil?, 'unexpected nil value (username)'
+		assert u.age.is_a?(Fixnum), 'unexpected value type (age)'
+	end
+
+	def test_alternative_attr_name
+		u = AttrUsers['zhena']
+		assert !u.nil?, 'unexpected nil record'
+		assert !u.first_name.nil?, 'unexpected nil value (first_name)'
+		assert u.first_name == u[:name], 'method does not match backing field'
 	end
 
 end

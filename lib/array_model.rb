@@ -69,11 +69,15 @@ class ArrayModel
 		end
 	end
 
+	def self.attr_value_readers(keys)
+		keys.each {|k| attr_value_reader k }
+	end
+
 	def self.model_data(data, options = nil)
 		options ||= {}
 		data.is_a! Array, 'data'
 
-		@data_key = options[:key]
+		@data_key = options[:primary_key]
 		@data = data	
 	end
 end
