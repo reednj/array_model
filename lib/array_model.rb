@@ -8,7 +8,7 @@ require "array_model/version"
 # into an ActiveRecord model without having to create many small tables that will never
 # change.
 #
-# This data should be never change while the application is running, so the model object
+# This data should be never change while the application is running, so the model objects
 # that are created are read only. The data can come either from a constant in the ruby
 # script itself, or from the filesystem as a YAML or JSON file.
 #
