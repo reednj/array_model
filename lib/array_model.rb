@@ -14,23 +14,23 @@ require "array_model/version"
 #
 # Example:
 #
-# 	USERS = [
-# 		{ name: 'Nathan', year: 1984 }, 
-# 		{ name: 'Dave', year: 1987 }
-# 	]
+#    USERS = [
+#    	{ name: 'Nathan', year: 1984 }, 
+#    	{ name: 'Dave', year: 1987 }
+#    ]
 #
-#	class User < ArrayModel
-#		model_data USERS
-#		attr_model_reader :name
-#		attr_model_reader :year
+#    class User < ArrayModel
+#    	model_data USERS
+#    	attr_model_reader :name
+#    	attr_model_reader :year
 #
-#		def age
-#			Time.now.year - year
-#		end
-#	end
+#    	def age
+#    		Time.now.year - year
+#    	end
+#    end
 #
-# 	User[0].age # => 32
-# 	User[1].name # => "Dave"
+#    User[0].age # => 32
+#    User[1].name # => "Dave"
 #
 class ArrayModel
 	# get the object with the key :k:
@@ -39,7 +39,7 @@ class ArrayModel
 	# any field by using the :primary_key option when calling :model_data:
 	# when the class is defined
 	#
-	#		Users['reednj'] # => #<Users:0x007fe693866808>
+	#    Users['reednj'] # => #<Users:0x007fe693866808>
 	#
 	def self.[](k)
 		if @data_key.nil?
@@ -70,10 +70,10 @@ class ArrayModel
 	# prefered to accessing the hash directly, but this can be useful
 	# in certain cases
 	#
-	#		u = Users['reednj']
-	#		u.username 			# => 'reednj'
-	#		u.values(:username) # => 'reednj'
-	#		u[:username] 		# => 'reednj'
+	#    u = Users['reednj']
+	#    u.username 			# => 'reednj'
+	#    u.values(:username)	# => 'reednj'
+	#    u[:username] 			# => 'reednj'
 	#
 	def [](k)
 		values[k]
@@ -82,7 +82,7 @@ class ArrayModel
 	# returns the raw Hash that provides the data for the model
 	# object
 	#
-	#		Users['reednj'].values # => {:username => 'reednj', ...}
+	#    Users['reednj'].values # => {:username => 'reednj', ...}
 	#
 	def values
 		@item_data
@@ -101,12 +101,12 @@ class ArrayModel
 	# of the key in the hash, if it doesn't have the same name as the
 	# method
 	#
-	#		class Users < ArrayModel
-	#			...
-	#			attr_model_reader :username
-	#			attr_model_reader :user_id, :key => :userId
-	#			...
-	#		end
+	#    class Users < ArrayModel
+	#    	...
+	#    	attr_model_reader :username
+	#    	attr_model_reader :user_id, :key => :userId
+	#    	...
+	#    end
 	#
 	def self.attr_model_reader(name, options = {})
 		define_method name.to_sym do
@@ -118,11 +118,11 @@ class ArrayModel
 	# once. No options can be passed when using this method to add
 	# the readers
 	#
-	#		class Users < ArrayModel
-	#			...
-	#			attr_model_readers [:username, :user_id]
-	#			...
-	#		end
+	#    class Users < ArrayModel
+	#    	...
+	#	    attr_model_readers [:username, :user_id]
+	#    	...
+	#    end
 	#
 	def self.attr_model_readers(keys)
 		keys.each {|k| attr_model_reader k }
@@ -140,11 +140,11 @@ class ArrayModel
 	# in the hash when it is accessed later via the subscript operator. If this option
 	# is ommited then the data will be accessable simply by the array index 
 	#
-	#		class Users < ArrayModel
-	#			# USER_LIST is a const containing an array of hashes
-	#			model_data USER_LIST, :primary_key => :username
-	#			...
-	#		end
+	#    class Users < ArrayModel
+	#    	# USER_LIST is a const containing an array of hashes
+	#    	model_data USER_LIST, :primary_key => :username
+	#    	...
+	#    end
 	#	
 	def self.model_data(data, options = nil)
 		options ||= {}
